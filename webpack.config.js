@@ -8,6 +8,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -44,7 +45,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: './index.html',
-      scriptType: 'module',
     }),
     new MiniCssExtractPlugin({
       filename: 'assets/[name].css',
@@ -54,14 +54,8 @@ module.exports = {
     static: {
       directory: path.join(__dirname, 'dist'),
     },
-    devMiddleware: {
-      index: 'index.html',
-    },
-    headers: {
-      "Content-Type": "application/javascript"
-    },
-    historyApiFallback: true, // Agregar esta opción
     compress: true,
-    port: 9000,
+    historyApiFallback: true,
+    port: 3005,
   },
 };
