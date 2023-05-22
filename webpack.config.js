@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: './src/index.js',
+  mode: 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -43,6 +44,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: './index.html',
+      scriptType: 'module',
     }),
     new MiniCssExtractPlugin({
       filename: 'assets/[name].css',
@@ -55,7 +57,10 @@ module.exports = {
     devMiddleware: {
       index: 'index.html',
     },
-    historyApiFallback: true,
+    headers: {
+      "Content-Type": "application/javascript"
+    },
+    historyApiFallback: true, // Agregar esta opción
     compress: true,
     port: 9000,
   },

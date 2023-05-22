@@ -3,7 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import '../style/components/Layout.css'
 
-function Layaout({ children }) {
+function Layout({ children }) {
   return (
     <div className="Main">
       <Header />
@@ -13,4 +13,4 @@ function Layaout({ children }) {
   );
 }
 
-export default Layaout;
+export default Layout;
