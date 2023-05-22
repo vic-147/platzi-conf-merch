@@ -7,7 +7,8 @@
     "start": "webpack server",
     "build": "webpack --mode production",
     "format": "prettier --write '{*.js,src/**/*.{js,jsx}}'",
-    "lint": "eslint src/ --fix"
+    "lint": "eslint src/ --fix",
+    "dev": "webpack --config webpack.config.dev.js"
   },
   "keywords": [],
   "author": "",
