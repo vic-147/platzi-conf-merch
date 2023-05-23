@@ -18,9 +18,25 @@ const useInitialState = () => {
     });
   };
 
+  const addToBayer = (payload) => {
+    setState({
+      ...state,
+      bayer: [...state.buyer, payload],
+    });
+  };
+
+  const addNewOrder = payload => {
+    setState({
+      ...state,
+      orders: [...state.orders, payload],
+  })
+  }
+
   return {
     addToCart,
     removeFromCart,
+    addToBayer,
+    addNewOrder,
     state,
   };
 };

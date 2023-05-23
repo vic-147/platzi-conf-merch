@@ -19,5 +19,15 @@
   text-decoration: none;
   color: #33b1ff;
 }
-
+.Header-title a {
+  text-decoration: none;
+  color: black;
+}
+.Header-checkout a {
+  text-decoration: none;
+  color: black;
+}
+.Header-checkout a:hover {
+  transform: scale(1.3);
+}
 
