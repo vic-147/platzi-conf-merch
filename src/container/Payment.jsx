@@ -21,13 +21,13 @@ function Payment() {
   };
 
   const buttonStyles = {
-    layout: 'vertical',
+    layout: 'horizontal',
     shape: 'rect',
   };
 
   const handlePaymentSuccess = (data) => {
     console.log(data);
-    if (data.status === 'COMPLITED') {
+    if (data.status === 'COMPLETED') {
       const newOrder = {
         buyer,
         product: cart,
