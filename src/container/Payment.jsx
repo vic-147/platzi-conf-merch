@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { PayPalButton } from 'react-paypal-button-v2';
 import AppContext from '../context/AppContext';
 import handleSumTotal from '../components/utils';
 import '../style/components/Payment.css';
@@ -15,7 +15,7 @@ function Payment() {
   } = useContext(AppContext);
 
   const paypalOptions = {
-    "client-id": Api,
+    clientID: Api,
     intent: 'capture',
     currency: 'USD',
   };
@@ -39,7 +39,22 @@ function Payment() {
   };
 
   const total = handleSumTotal(cart);
-  const toStringTotal = toString(total);
+
+  const createOrder = (_data, actions) =>
+    actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: total,
+          },
+        },
+      ],
+    });
+
+  const onApprove = (_data, actions) =>
+    actions.order.capture().then((data) => {
+      handlePaymentSuccess(data);
+    });
 
   return (
     <div className="Payment">
@@ -54,17 +69,14 @@ function Payment() {
           </div>
         ))}
         <div className="Payment-button">
-          <PayPalScriptProvider options={paypalOptions}>
-            <PayPalButtons
-             
-              buttonStyle={buttonStyles}
-              amount={toStringTotal}
-              onPaymentStart={() => console.log('Start Payment')}
-              onPaymentSuccess={(data) => handlePaymentSuccess(data)}
-              onPaymentError={(error) => console.log(error)}
-              onPaymentCancel={(data) => console.log(data)}
-            />
-          </PayPalScriptProvider>
+          <PayPalButton
+            paypalOptions={paypalOptions}
+            buttonStyle={buttonStyles}
+            createOrder={(data, actions) => createOrder(data, actions)}
+            onApprove={(data, actions) => onApprove(data, actions)}
+            onPaymentError={(error) => console.log(error)}
+            onPaymentCancel={(data) => console.log(data)}
+          />
         </div>
       </div>
     </div>
