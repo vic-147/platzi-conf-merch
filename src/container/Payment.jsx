@@ -15,7 +15,7 @@ function Payment() {
   } = useContext(AppContext);
 
   const paypalOptions = {
-    "client-id": Api,
+    'client-id': Api,
     intent: 'capture',
     currency: 'USD',
   };
@@ -25,9 +25,10 @@ function Payment() {
     shape: 'rect',
   };
 
+  // funcion de redireccionamineto
   const handlePaymentSuccess = (data) => {
     console.log(data);
-    if (data.status === 'COMPLITED') {
+    if (data.status === 'COMPLETED') {
       const newOrder = {
         buyer,
         product: cart,
@@ -39,7 +40,24 @@ function Payment() {
   };
 
   const total = handleSumTotal(cart);
-  const toStringTotal = toString(total);
+
+  // pasar precio a paypal
+  const createOrder = (_data, actions) =>
+    actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: total,
+          },
+        },
+      ],
+    });
+
+  // paypal result - redireccionamiento
+  const onApprove = (_data, actions) =>
+    actions.order.capture().then((data) => {
+      handlePaymentSuccess(data);
+    });
 
   return (
     <div className="Payment">
@@ -56,13 +74,11 @@ function Payment() {
         <div className="Payment-button">
           <PayPalScriptProvider options={paypalOptions}>
             <PayPalButtons
-             
-              buttonStyle={buttonStyles}
-              amount={toStringTotal}
-              onPaymentStart={() => console.log('Start Payment')}
-              onPaymentSuccess={(data) => handlePaymentSuccess(data)}
-              onPaymentError={(error) => console.log(error)}
-              onPaymentCancel={(data) => console.log(data)}
+              Style={buttonStyles}
+              createOrder={(data, actions) => createOrder(data, actions)}
+              onApprove={(data, actions) => onApprove(data, actions)}
+              onPaymentError={(err) => console.log(err)}
+              onPaymentCancel={(data) => console.log(`Cancel order${data}`)}
             />
           </PayPalScriptProvider>
         </div>
