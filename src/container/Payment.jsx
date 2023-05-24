@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PayPalButton } from 'react-paypal-button-v2';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import AppContext from '../context/AppContext';
 import handleSumTotal from '../components/utils';
 import '../style/components/Payment.css';
@@ -15,7 +15,7 @@ function Payment() {
   } = useContext(AppContext);
 
   const paypalOptions = {
-    clientID: Api,
+    'client-id': Api,
     intent: 'capture',
     currency: 'USD',
   };
@@ -25,6 +25,7 @@ function Payment() {
     shape: 'rect',
   };
 
+  // funcion de redireccionamineto
   const handlePaymentSuccess = (data) => {
     console.log(data);
     if (data.status === 'COMPLETED') {
@@ -40,6 +41,7 @@ function Payment() {
 
   const total = handleSumTotal(cart);
 
+  // pasar precio a paypal
   const createOrder = (_data, actions) =>
     actions.order.create({
       purchase_units: [
@@ -51,6 +53,7 @@ function Payment() {
       ],
     });
 
+  // paypal result - redireccionamiento
   const onApprove = (_data, actions) =>
     actions.order.capture().then((data) => {
       handlePaymentSuccess(data);
@@ -69,14 +72,15 @@ function Payment() {
           </div>
         ))}
         <div className="Payment-button">
-          <PayPalButton
-            paypalOptions={paypalOptions}
-            buttonStyle={buttonStyles}
-            createOrder={(data, actions) => createOrder(data, actions)}
-            onApprove={(data, actions) => onApprove(data, actions)}
-            onPaymentError={(error) => console.log(error)}
-            onPaymentCancel={(data) => console.log(data)}
-          />
+          <PayPalScriptProvider options={paypalOptions}>
+            <PayPalButtons
+              Style={buttonStyles}
+              createOrder={(data, actions) => createOrder(data, actions)}
+              onApprove={(data, actions) => onApprove(data, actions)}
+              onPaymentError={(err) => console.log(err)}
+              onPaymentCancel={(data) => console.log(`Cancel order${data}`)}
+            />
+          </PayPalScriptProvider>
         </div>
       </div>
     </div>
