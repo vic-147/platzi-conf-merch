@@ -17,7 +17,7 @@ function Map({ data }) {
         />
         <Marker position={location}>
           <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
+            {location}. <br /> Ust. esta aqui.
           </Popup>
         </Marker>
       </MapContainer>

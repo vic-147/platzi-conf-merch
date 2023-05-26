@@ -13,6 +13,7 @@ function Payment() {
   const {
     state: { cart, buyer },
     addNewOrder,
+    removeAllFromCart,
   } = useContext(AppContext);
 
   const paypalOptions = {
@@ -35,6 +36,7 @@ function Payment() {
         payment: data,
       };
       addNewOrder(newOrder);
+      removeAllFromCart();
       navigate('/success');
     }
   };
