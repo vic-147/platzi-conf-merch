@@ -38,3 +38,5 @@ jobs:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          CLIENT_API: ${{ secrets.CLIENT_API }}
+          MAP_API: ${{ secrets.MAP_API }}
