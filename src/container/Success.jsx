@@ -4,6 +4,8 @@ import AppContext from '../context/AppContext';
 import Map from './Map';
 import '../style/components/Success.css';
 
+const Apikey = process.env.map_API;
+
 function Success() {
   const [map, setMap] = useState([]);
   const {
@@ -13,7 +15,7 @@ function Success() {
 
   useEffect(() => {
     const encodedAddress = encodeURIComponent(buyer[0].address);
-    const url = `http://api.positionstack.com/v1/forward?access_key=b49650b7e9af1c1c0bd7b99adca3700f&query=${encodedAddress}`;
+    const url = `http://api.positionstack.com/v1/forward?access_key=${Apikey}&query=${encodedAddress}`;
 
     axios
       .get(url)
