@@ -12,9 +12,9 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
-            env:
-              CLIENT_API: ${{ secrets.CLIENT_API }}
-              MAP_API: ${{ secrets.MAP_API }}
+        env:
+          CLIENT_API: ${{ CLIENT_API }}
+          MAP_API: ${{ MAP_API }}
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
