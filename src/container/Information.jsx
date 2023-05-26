@@ -25,7 +25,6 @@ function Information() {
     };
     addToBuyer(buyer);
     navigate('/payment');
-    // navigate('/success');
   };
 
   return (
