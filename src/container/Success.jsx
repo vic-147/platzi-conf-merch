@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import AppContext from '../context/AppContext';
 import Map from './Map';
@@ -32,15 +33,20 @@ function Success() {
   }, []);
 
   return (
-    <div className="Success">
-      <div className="Success-content">
-        <h2>{`${buyer[0].name}, Gracias por su compra`}</h2>
-        <span>Tu pedido llegará en 3 días</span>
-        <div className="Succes-map">
-          {location.length > 0 && <Map data={location} />}
+    <>
+      <Helmet>
+        <title>Exitoso!</title>
+      </Helmet>
+      <div className="Success">
+        <div className="Success-content">
+          <h2>{`${buyer[0].name}, Gracias por su compra`}</h2>
+          <span>Tu pedido llegará en 3 días</span>
+          <div className="Succes-map">
+            {location.length > 0 && <Map data={location} />}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import AppContext from '../context/AppContext';
@@ -62,30 +63,35 @@ function Payment() {
     });
 
   return (
-    <div className="Payment">
-      <div className="Payment-content">
-        <h3>Resumen de pedido</h3>
-        {cart.map((item) => (
-          <div className="Payment-item" key={item.id}>
-            <div className="Payment-element">
-              <h4>{item.title}</h4>
-              <span>$ {item.price}</span>
+    <>
+      <Helmet>
+        <title>Pagos</title>
+      </Helmet>
+      <div className="Payment">
+        <div className="Payment-content">
+          <h3>Resumen de pedido</h3>
+          {cart.map((item) => (
+            <div className="Payment-item" key={item.id}>
+              <div className="Payment-element">
+                <h4>{item.title}</h4>
+                <span>$ {item.price}</span>
+              </div>
             </div>
+          ))}
+          <div className="Payment-button">
+            <PayPalScriptProvider options={paypalOptions}>
+              <PayPalButtons
+                Style={buttonStyles}
+                createOrder={(data, actions) => createOrder(data, actions)}
+                onApprove={(data, actions) => onApprove(data, actions)}
+                onPaymentError={(err) => console.log(err)}
+                onPaymentCancel={(data) => console.log(`Cancel order${data}`)}
+              />
+            </PayPalScriptProvider>
           </div>
-        ))}
-        <div className="Payment-button">
-          <PayPalScriptProvider options={paypalOptions}>
-            <PayPalButtons
-              Style={buttonStyles}
-              createOrder={(data, actions) => createOrder(data, actions)}
-              onApprove={(data, actions) => onApprove(data, actions)}
-              onPaymentError={(err) => console.log(err)}
-              onPaymentCancel={(data) => console.log(`Cancel order${data}`)}
-            />
-          </PayPalScriptProvider>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
