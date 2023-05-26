@@ -9,7 +9,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -38,6 +38,17 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader,
           },
           'css-loader',
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|pdf|ico)$/i,
+        use: [
+          {
+            loader: 'raw-loader',
+            options: {
+              esModule: false,
+            },
+          },
         ],
       },
     ],

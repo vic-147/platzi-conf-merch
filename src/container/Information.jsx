@@ -4,7 +4,7 @@ import AppContext from '../context/AppContext';
 import '../style/components/Information.css';
 
 function Information() {
-  const { state, addToBayer } = useContext(AppContext);
+  const { state, addToBuyer } = useContext(AppContext);
   const form = useRef(null);
   const navigate = useNavigate();
 
@@ -12,19 +12,20 @@ function Information() {
 
   const handleSubmit = () => {
     const formData = new FormData(form.current);
-    const bayer = {
+    const buyer = {
       name: formData.get('name'),
       email: formData.get('email'),
       address: formData.get('address'),
-      adto: formData.get('adto'),
+      adto: formData.get('apto'),
       city: formData.get('city'),
       country: formData.get('country'),
       state: formData.get('state'),
       cp: formData.get('cp'),
       phone: formData.get('phone'),
     };
-    addToBayer(bayer);
+    addToBuyer(buyer);
     navigate('/payment');
+    // navigate('/success');
   };
 
   return (
