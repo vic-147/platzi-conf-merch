@@ -13,8 +13,8 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          CLIENT_API: ${{ secrets.CLIENT_API }}
-          MAP_API: ${{ secrets.MAP_API }}
+          CLIENT_API: ${{ secrets.env.CLIENT_API }}
+          MAP_API: ${{ secrets.env.MAP_API }}
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
@@ -37,6 +37,6 @@ jobs:
         with:
           args: deploy --only hosting
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          CLIENT_API: ${{ secrets.CLIENT_API }}
+          FIREBASE_TOKEN: ${{ secrets.env.FIREBASE_TOKEN }}
+          CLIENT_API: ${{ secrets.env.CLIENT_API }}
           MAP_API: ${{ secrets.MAP_API }}
